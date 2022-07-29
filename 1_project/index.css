@@ -1,0 +1,36 @@
+#canvas1 {
+    border: 5px solid black;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+}
+
+.controls {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: "100%";
+    border-width: 2px;
+    z-index: 10;
+    top: 60px;
+    right: 50%;
+    left: 50%;
+    gap: 20px;
+    /* top: 50px; */
+    /* left: 50px; */
+    /* transform: translateX(-50%); */
+}
+
+label {
+    white-space: nowrap;
+}
+
+.controls,
+select,
+option {
+    font-size: 25px;
+}
