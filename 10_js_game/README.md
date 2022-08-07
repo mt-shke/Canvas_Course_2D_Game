@@ -28,6 +28,14 @@
 
 // add dust class
 // add fire class
+
+// add collisionAnimation class && collision logic
+
+// add game time logic
+
+// add floatingMessage class and logic
+
+// refac splice method > filter
 ```
 
 </details>

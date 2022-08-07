@@ -1,4 +1,5 @@
 import { CollisionAnimation } from "./collisionAnimation.js";
+import FloatingMessage from "./floatingMessages.js";
 import {
     Diving,
     Falling,
@@ -40,6 +41,7 @@ export default class Player {
             new Diving(this.game),
             new Hit(this.game),
         ];
+        this.currentState = null;
     }
 
     update(input, deltaTime) {
@@ -49,8 +51,16 @@ export default class Player {
 
         // HORIZONTAL Movement
         this.x += this.speed;
-        if (input.includes("ArrowRight")) this.speed = this.maxSpeed;
-        else if (input.includes("ArrowLeft")) this.speed = -this.maxSpeed;
+        if (
+            input.includes("ArrowRight") &&
+            this.currentState !== this.states[6]
+        )
+            this.speed = this.maxSpeed;
+        else if (
+            input.includes("ArrowLeft") &&
+            this.currentState !== this.states[6]
+        )
+            this.speed = -this.maxSpeed;
         else this.speed = 0;
 
         // LOCK Player in canvas - Horizontal boundaries
@@ -115,7 +125,6 @@ export default class Player {
                 enemy.y + enemy.height > this.y
             ) {
                 // collision
-                enemy.markedForDeletion = true;
                 this.game.collisions.push(
                     new CollisionAnimation(
                         this.game,
@@ -124,13 +133,20 @@ export default class Player {
                     )
                 );
 
+                enemy.markedForDeletion = true;
+
                 if (
                     this.currentState === this.states[4] ||
                     this.currentState === this.states[5]
                 ) {
                     ++this.game.score;
+                    this.game.floatingMessages.push(
+                        new FloatingMessage("+1", enemy.x, enemy.y, 150, 50)
+                    );
                 } else {
                     this.setState(6, 0);
+                    --this.game.lives;
+                    if (this.game.lives <= 0) this.game.gameOver = true;
                 }
             }
         });

@@ -3,12 +3,12 @@ export class CollisionAnimation {
         this.game = game;
         this.image = boom;
         this.spriteWidth = 100;
-        this.spriteHeight = 100;
+        this.spriteHeight = 90;
         this.sizeModifier = Math.random() * 0.5 + 1;
         this.width = this.spriteWidth * this.sizeModifier;
         this.height = this.spriteHeight * this.sizeModifier;
-        this.x = x;
-        this.y = y;
+        this.x = x - this.width * 0.5;
+        this.y = y - this.height * 0.5;
         this.frameX = 0;
         this.maxFrame = 4;
         this.markedForDeletion = false;
@@ -34,8 +34,9 @@ export class CollisionAnimation {
 
         if (this.frameTimer > this.frameInterval) {
             ++this.frameX;
-            if (this.frameX >= this.maxFrame) this.markedForDeletion = true;
             this.frameTimer = 0;
         } else this.frameTimer += deltaTime;
+
+        if (this.frameX >= this.maxFrame) this.markedForDeletion = true;
     }
 }
